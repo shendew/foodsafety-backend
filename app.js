@@ -3,11 +3,13 @@ const mongoose=require('mongoose')
 
 
 const app=express();
-const PORT=process.env.PORT || 8080;
+const PORT=process.env.PORT || 3000;
 
 const userRoute=require('./functions/UserRoute');
+const sellerRoute=require('./functions/SellerRoute');
 
 app.use('/auth',userRoute);
+app.use('/sellerauth',sellerRoute);
 
 
 const atlas="mongodb+srv://kavishkadew2001:qTteFvCppmwETk2A@food-safety.zz0vi76.mongodb.net/foodsafety";
