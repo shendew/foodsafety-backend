@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const router = express.Router();
 
 const Users=require("../models/User");
+const fileUpload =require('../middleware/UserfileUpload');
+
 
 function authGen() {
     const authPromise = new Promise((resolve, reject) => {
@@ -34,7 +36,7 @@ function authGen() {
 
 
 
-  router.post("/insert", bodyParser.json(), async (req, res) => {
+  router.post("/insert", bodyParser.json(),fileUpload.single('UserImage'), async (req, res) => {
     /*
       status:102 - server error
       status:103 -success ->> authkey
@@ -55,7 +57,7 @@ function authGen() {
           }
         
           
-  
+          
           const newUser = new Users({
             UserID: req.body.UserID,
             UserFirstName: req.body.UserFirstName,
@@ -65,7 +67,7 @@ function authGen() {
             UserPassword: req.body.UserPassword,
             UserGender:req.body.UserGender,
             UserDOB:req.body.UserDOB,
-            UserImage:req.body.UserImage,
+            UserImage:"",
             UserContactNumber:req.body.UserContactNumber,
 
             UserAlergies:alergies,
@@ -75,6 +77,12 @@ function authGen() {
             UserAddres:[],
             UserCart: [],
           });
+
+          if(req.file){
+            newUser.UserImage=req.file.path;
+          }else{
+            newUser.UserImage="https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png"
+          }
   
           await newUser
             .save()

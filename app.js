@@ -11,6 +11,8 @@ const sellerRoute=require('./functions/SellerRoute');
 app.use('/auth',userRoute);
 app.use('/sellerauth',sellerRoute);
 
+app.get('/SellerUploads',express.static('SellerUploads'));
+
 
 const atlas="mongodb+srv://kavishkadew2001:qTteFvCppmwETk2A@food-safety.zz0vi76.mongodb.net/foodsafety";
 
